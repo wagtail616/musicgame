@@ -1,0 +1,56 @@
+:root {
+    --widht: 640px;
+    --video-width: 320px;
+}
+
+@media screen and (min-width: 640px) {
+    :root {
+        --width: 640px;
+        --video-width: 640px;
+    }
+}
+
+body {
+    background: black;
+}
+
+.centering {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    max-width: var(--width);
+    height: 100%;
+
+    background-color: black;
+}
+
+@media screen and (min-width: 640px) {
+    .centering {
+        left: calc(50% - (var(--width)/2));
+    }
+}
+
+.centering .player {
+    position: absolute;
+    top: 10%;
+    left: calc(50% - (var(--video-width)/2));
+}
+
+.centering .canvas {
+    position: absolute;
+    top: 0;
+    left: 8px;
+
+    width: calc(100% - 16px);
+    height: 100%;
+}
+
+@media screen and (min-width: 640px) {
+    .centering .canvas {
+        left: -4px;
+
+        width: calc(100% + 8px);
+    }
+}
