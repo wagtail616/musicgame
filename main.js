@@ -220,6 +220,7 @@ const gamePlay = async () => {
   GAME_MODE.state = GAME_MODE.play;
 
   initGame();
+  //+"77" 透明度追加
   const effectColor = BAR_COLOR.map((value) => value + "77");
   let drawCount = 0; //描画カウンター
 
