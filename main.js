@@ -166,7 +166,10 @@ const gameStandby = async () => {
   const drawText = () => {
     ctx.layer.font = "28pt sans-serif";
     ctx.layer.fillStyle = "white";
+    //開始文字を黒く縁取り
     ctx.layer.fillText(text, (cvSize.width - ctx.layer.measureText(text).width) / 2, cvSize.height / 1.75);
+    ctx.layer.fillStyle = "black";
+    ctx.layer.strokeText(text, (cvSize.width - ctx.layer.measureText(text).width) / 2, cvSize.height / 1.75);
   };
 
   drawBoxes();
@@ -246,12 +249,30 @@ const gamePlay = async () => {
   const drawJudge = () => {
     if (drawCount <= 0) return;
     ctx.layer.font = "32pt sans-serif";
-    ctx.layer.fillStyle = "white";
+    switch(playData.judge){
+      case 0:ctx.layer.fillStyle = "yellow";
+      break;
+      case 1:ctx.layer.fillStyle = "red";
+      break;
+      case 2:ctx.layer.fillStyle = "orage";
+      break;
+      case 3:ctx.layer.fillStyle = "green";
+      break;
+      case 4:ctx.layer.fillStyle = "blue";
+      break;
+    }
     ctx.layer.fillText(
       JUDGE.text[playData.judge],
       (cvSize.width - ctx.layer.measureText(JUDGE.text[playData.judge]).width) >> 1,
       cvSize.height / 2 + drawCount
     );
+    ctx.layer.fillStyle = "black";
+    ctx.layer.strokeText(
+      JUDGE.text[playData.judge],
+      (cvSize.width - ctx.layer.measureText(JUDGE.text[playData.judge]).width) >> 1,
+      cvSize.height / 2 + drawCount
+    );
+
     if (1 < playData.combo) {
       let text = playData.combo + " Combo";
       ctx.layer.fillText(
@@ -315,7 +336,7 @@ const gamePlay = async () => {
     for (let [i, text] of list.entries()) {
       text += " : " + padZero(data[i], digit);
       const x = i === JUDGE.excellent ? right : cvSize.width - right - ctx.layer.measureText(text).width;
-      ctx.layer.fillText(text, x, cvSize.height / 2 + textHeight * i);
+      ctx.layer.fillText(text, x-200, cvSize.height / 2 + textHeight * i+110);
     }
   };
 
