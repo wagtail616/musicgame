@@ -16,7 +16,7 @@ const VIDEO_SIZE = {
     wait: 9,
     state: null,
   },
-  //タイミング判定
+  //タイミング判定名の定義
   JUDGE = {
     perfect: 0,
     excellent: 1,
