@@ -143,6 +143,24 @@ const gameStandby = async () => {
     for (let i = 0; i < notes.lineSize; ++i) drawBox(i);
   };
 
+  //判定枠に文字追加
+  const drawAlphabet=()=>{
+    ctx.back.font = "28pt sans-serif";
+    ctx.back.fillStyle = "white";
+    
+    ctx.back.fillText("a",30,500);
+    ctx.back.fillText("s",110,500);
+    ctx.back.fillText("d",190,500);
+    ctx.back.fillText("f",275,500);
+
+    ctx.back.fillText("j",355,500);
+    ctx.back.fillText("k",430,500);
+    ctx.back.fillText("l",515,500);
+    ctx.back.fillText(";",590,500);
+
+  } 
+
+
   //テキストを描画
   const text = "TOUCH START";
   const drawText = () => {
@@ -153,6 +171,7 @@ const gameStandby = async () => {
 
   drawBoxes();
   drawLine();
+  drawAlphabet();
 
   let b = false;
   while (GAME_MODE.state === GAME_MODE.standby) {
@@ -298,7 +317,6 @@ const gamePlay = async () => {
       const x = i === JUDGE.excellent ? right : cvSize.width - right - ctx.layer.measureText(text).width;
       ctx.layer.fillText(text, x, cvSize.height / 2 + textHeight * i);
     }
-    ctx.layer.fillText("point");
   };
 
   //プレイ終了
