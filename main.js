@@ -275,7 +275,16 @@ const gamePlay = async () => {
 
     if (1 < playData.combo) {
       let text = playData.combo + " Combo";
+      
+      ctx.layer.fillStyle = "white";
       ctx.layer.fillText(
+        text,
+        (cvSize.width - ctx.layer.measureText(text).width) >> 1,
+        cvSize.height / 1.75 + drawCount
+      );
+      
+      ctx.layer.fillStyle = "black";
+      ctx.layer.strokeText(
         text,
         (cvSize.width - ctx.layer.measureText(text).width) >> 1,
         cvSize.height / 1.75 + drawCount
@@ -317,6 +326,7 @@ const gamePlay = async () => {
     clearCanvas(ctx.back);
     clearCanvas(ctx.layer);
     let digit = 10;
+    let ScoreRate=point/max_point*100;
     while (true) {
       if (notes.getSize() < digit) {
         digit = String(digit - 1).length;
@@ -324,6 +334,8 @@ const gamePlay = async () => {
       }
       digit *= 10;
     }
+    playrank(ScoreRate);
+
     ctx.layer.font = "24pt sans-serif";
     ctx.layer.fillStyle = "white";
     const mesure = ctx.layer.measureText(
@@ -338,6 +350,10 @@ const gamePlay = async () => {
       const x = i === JUDGE.excellent ? right : cvSize.width - right - ctx.layer.measureText(text).width;
       ctx.layer.fillText(text, x-200, cvSize.height / 2 + textHeight * i+110);
     }
+    ctx.layer.fillText("ScoreRate:"+ScoreRate.toFixed(2).toString()+"%", cvSize.width/2-100, cvSize.height / 2 + textHeight);
+    ctx.layer.fillStyle = "black";
+    ctx.layer.strokeText("ScoreRate:"+ScoreRate.toFixed(2).toString()+"%", cvSize.width/2-100, cvSize.height / 2 + textHeight);
+
   };
 
   //プレイ終了
@@ -379,18 +395,22 @@ const setInput = (line) => {
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i] < y && y < inputRange.bottom[i]) {
         playData.judge = i;
-        max_point+=500;
         switch(playData.judge){
           // 判定によって点数を加算
           case 0:point+=500;
+          max_point+=500;
             break;
           case 1:point+=300;
+          max_point+=500;
             break;
           case 2:point+=200;
+          max_point+=500;
             break;
           case 3:point+=100;
+          max_point+=500;
             break;
           case 4:point-=100;
+          max_point+=500;
             break;
         }
         break;
@@ -471,3 +491,37 @@ window.onload = () => {
     input(false, e);
   };
 };
+
+//ランク表示
+const playrank=(ScoreRate)=>{
+  ctx.layer.font = "64pt sans-serif";
+  let Rank;
+  if(ScoreRate==100){
+    Rank="SSS";
+  }else
+  if(ScoreRate>=99){
+    Rank="SS";
+  }else
+  if(ScoreRate>=97){
+    Rank="S";
+  }else
+  if(ScoreRate>=90){
+    Rank="AA";
+  }else
+  if(ScoreRate>=80){
+    Rank="A";
+  }
+  if(ScoreRate>=60){
+    Rank="B";
+  }
+  if(ScoreRate>=50){
+    Rank="C";
+  }else{
+    Rank="D";
+  }
+  ctx.layer.fillStyle = "white";
+  ctx.layer.fillText(Rank, cvSize.width/2, cvSize.height / 2);
+  ctx.layer.fillStyle = "black";
+  ctx.layer.strokeText(Rank, cvSize.width/2, cvSize.height / 2 );
+
+}
