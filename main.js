@@ -359,6 +359,7 @@ const gamePlay = async () => {
   //プレイ終了
   const gameEnd = () => {
     GAME_MODE.state = GAME_MODE.playData;
+    player.stopVideo();
 
     drawPlayData();
     setTimeout(() => {
@@ -479,6 +480,8 @@ const input = (isTouch={}, e) => {
       break;
     
       case GAME_MODE.end:
+
+      blackOut();
       setGameData();
       retry();
       break;
@@ -520,6 +523,12 @@ const playrank=(ScoreRate)=>{
   ctx.layer.strokeText(Rank, cvSize.width/2, cvSize.height / 2 );
 
 }
-const retry=()=>{
+const blackOut=()=>{
+  ctx.layer.strokeStyle ="#000000";
+  ctx.layer.strokeRect(0,0, 1000, 1000);
 
+}
+
+const retry=()=>{
+  
 }
