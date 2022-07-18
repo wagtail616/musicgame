@@ -375,7 +375,11 @@ const gamePlay = async () => {
     judge();
     drawJudge();
     drawTimingBar();
-    if (notes.isEnd) gameEnd();
+    if (notes.isEnd) {
+      //sleepでリザルト画面までの時間延ばす
+      await sleep(1000);
+      gameEnd();
+    }
     await sleep(16);
   }
 };
@@ -391,7 +395,7 @@ const setInput = (line) => {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
   playData.setInput(line, inputRange.over < y);
-  playData.judge = JUDGE.miss;
+  // playData.judge = JUDGE.miss;
   if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i] < y && y < inputRange.bottom[i]) {
@@ -440,7 +444,7 @@ const push = (kb) => {
     // if (key === kb) {
       switch(event.key){
         case'a':setInput(0);
-          break;
+        break;
         case's':setInput(1);
         break;
         case'd':setInput(2);
