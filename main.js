@@ -480,6 +480,7 @@ const input = (isTouch={}, e) => {
     
       case GAME_MODE.end:
       setGameData();
+      retry();
       break;
   }
 };
@@ -517,5 +518,8 @@ const playrank=(ScoreRate)=>{
   ctx.layer.fillText(Rank, cvSize.width/2, cvSize.height / 2);
   ctx.layer.fillStyle = "black";
   ctx.layer.strokeText(Rank, cvSize.width/2, cvSize.height / 2 );
+
+}
+const retry=()=>{
 
 }
