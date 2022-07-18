@@ -313,7 +313,9 @@ const gamePlay = async () => {
       } else {
         notes.offset = ++notes.index;
         ++playData.judgeCount[playData.judge];
-        if (playData.maxCombo < ++playData.combo) playData.maxCombo = playData.combo;
+        if (playData.maxCombo < ++playData.combo) {
+          playData.maxCombo = playData.combo;
+      }
       }
       if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
       drawInputEffect();
@@ -396,7 +398,7 @@ const setInput = (line) => {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
   playData.setInput(line, inputRange.over < y);
-  // playData.judge = JUDGE.miss;
+  playData.judge = JUDGE.miss;
   if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i] < y && y < inputRange.bottom[i]) {
