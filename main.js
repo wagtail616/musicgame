@@ -498,23 +498,17 @@ const playrank=(ScoreRate)=>{
   let Rank;
   if(ScoreRate==100){
     Rank="SSS";
-  }else
-  if(ScoreRate>=99){
+  }else if(ScoreRate>=99){
     Rank="SS";
-  }else
-  if(ScoreRate>=97){
+  }else if(ScoreRate>=97){
     Rank="S";
-  }else
-  if(ScoreRate>=90){
+  }else if(ScoreRate>=90){
     Rank="AA";
-  }else
-  if(ScoreRate>=80){
+  }else if(ScoreRate>=80){
     Rank="A";
-  }
-  if(ScoreRate>=60){
+  }else if(ScoreRate>=60){
     Rank="B";
-  }
-  if(ScoreRate>=50){
+  }else if(ScoreRate>=50){
     Rank="C";
   }else{
     Rank="D";
