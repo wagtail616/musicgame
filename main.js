@@ -481,7 +481,6 @@ const input = (isTouch={}, e) => {
     
       case GAME_MODE.end:
 
-      blackOut();
       setGameData();
       retry();
       break;
@@ -523,12 +522,8 @@ const playrank=(ScoreRate)=>{
   ctx.layer.strokeText(Rank, cvSize.width/2, cvSize.height / 2 );
 
 }
-const blackOut=()=>{
-  ctx.layer.strokeStyle ="#000000";
-  ctx.layer.strokeRect(0,0, 1000, 1000);
 
-}
 
 const retry=()=>{
-  
+  gameStandby();
 }
