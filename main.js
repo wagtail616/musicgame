@@ -401,7 +401,7 @@ const setInput = (line) => {
   playData.judge = JUDGE.miss;
   if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
-      if (inputRange.top[i] < y && y < inputRange.bottom[i]) {
+      if (inputRange.top[i]-10 < y && y < inputRange.bottom[i]+10) {
         playData.judge = i;
         switch(playData.judge){
           // 判定によって点数を加算
