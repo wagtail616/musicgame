@@ -1,3 +1,7 @@
+// アンサー音を読み込む
+/** アンサー音*/
+const anser = new Audio('./tap.wav');
+anser.volume=1.0;
 const VIDEO_SIZE = {
     width: 640,
     height: 360,
@@ -16,6 +20,7 @@ const VIDEO_SIZE = {
     wait: 9,
     state: null,
   },
+  
   //タイミング判定名の定義
   JUDGE = {
     perfect: 0,
@@ -92,6 +97,7 @@ const setGameData = () => {
     timing: FILE.timing,//入力タイミング
     line: FILE.line,//ライン
     index: 0,
+    anserIndex:0,
     offset: 0,
     getSize() {
       return this.timing.length;
@@ -233,13 +239,14 @@ const gamePlay = async () => {
   };
 
   //ノーツを描画
-  const drawTimingBar = () => {
-    const current = (player.getCurrentTime() * 1000) | 0;
+  const drawTimingBar = (current) => {
+    // const current = (player.getCurrentTime() * 1000) | 0;
     for (let i = notes.offset, size = notes.getSize(); i < size; ++i) {
       const y = (current - notes.timing[i]) / playData.speed + rectRange.y - rectRange.height;
       //見えてないノーツは消す
       if (y < 0) { break; }
 
+      
       bar[notes.line[i]].draw(y);
       if (i == notes.index && inputRange.bottom[JUDGE.normal] < y) {
         setInputMiss();
@@ -249,7 +256,19 @@ const gamePlay = async () => {
       if (cvSize.height < y) notes.offset = i + 1;
     }
   };
-
+/**
+ * アンサー音を鳴らす
+ * @param {number} current 曲が始まってからの経過時間
+ */
+  const soundControll = (current) =>{
+    while(current>=notes.timing[notes.anserIndex]){
+      anser.currentTime=0;
+      anser.play();
+      notes.anserIndex++;
+    }
+    console.log("anserIndex=> ",notes.timing[1]);
+      console.log("current=> ",current);
+  }
   //判定を描画
   const drawJudge = () => {
     if (drawCount <= 0) return;
@@ -386,12 +405,14 @@ const gamePlay = async () => {
   player.playVideo();
 
   while (GAME_MODE.state === GAME_MODE.play) {
+    const current = (player.getCurrentTime() * 1000) | 0;
     clearCanvas(ctx.layer);
     judge();
     if(playData.judge!=JUDGE.empty){
       drawJudge();
     }
-    drawTimingBar();
+    drawTimingBar(current);
+    soundControll(current);
     if (notes.isEnd) {
       //sleepでリザルト画面までの時間延ばす
       await sleep(1000);
