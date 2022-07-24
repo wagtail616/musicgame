@@ -2,6 +2,10 @@
 /** アンサー音*/
 const anser = new Audio('./tap.wav');
 anser.volume=1.0;
+let controller={};
+/**押されたキーの名称 */
+let keyNames=["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL","Semicolon"];
+
 const VIDEO_SIZE = {
     width: 640,
     height: 360,
@@ -30,7 +34,7 @@ const VIDEO_SIZE = {
     miss: 4,
     empty:5,//判定なし
     //配列のサイズ??????
-    size: 5,
+    size: 4,
     score: [],
     text: ["perfect", "excellent", "good", "normal", "miss", "empty"],
   },
@@ -340,6 +344,8 @@ const gamePlay = async () => {
         if (playData.maxCombo < ++playData.combo) {
           playData.maxCombo = playData.combo;
         }
+      }else{
+        playData.judgeCount[JUDGE.empty]++ ;
       }
       if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
       drawInputEffect();
@@ -401,10 +407,11 @@ const gamePlay = async () => {
   };
 
   player.playVideo();
-
+  //ゲームループ
   while (GAME_MODE.state === GAME_MODE.play) {
     const current = (player.getCurrentTime() * 1000) | 0;
     clearCanvas(ctx.layer);
+
     judge();
     if(playData.judge!=JUDGE.empty){
       drawJudge();
@@ -416,6 +423,13 @@ const gamePlay = async () => {
       await sleep(1000);
       gameEnd();
     }
+
+    for(let i=0;i<keyNames.length;i++){
+      if(controller[keyNames[i]]){
+        push(keyNames[i]);
+      }
+    }
+    controller={};
     await sleep(16);
   }
 };
@@ -467,28 +481,27 @@ const touch = (e) => {
   }
 };
 
-const controller = {};
 // ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";"],
 //キーボード
 const push = (kb) => {
   // for (let [i, key] of keyList.entries()) {
     // if (key === kb) {
       switch(kb){
-        case'a':setInput(0);
+        case'KeyA':setInput(0);
         break;
-        case's':setInput(1);
+        case'KeyS':setInput(1);
         break;
-        case'd':setInput(2);
+        case'KeyD':setInput(2);
         break;
-        case'f':setInput(3);
+        case'KeyF':setInput(3);
         break;
-        case'j':setInput(4);
+        case'KeyJ':setInput(4);
         break;
-        case'k':setInput(5);
+        case'KeyK':setInput(5);
         break;
-        case'l':setInput(6);
+        case'KeyL':setInput(6);
         break;
-        case';':setInput(7);
+        case'Semicolon':setInput(7);
         break;
       }
       
@@ -497,10 +510,11 @@ const push = (kb) => {
   // }
 };
 
-// 同時押し用入力
+// 同時押し用入力 おじ
 document.addEventListener('keydown', (event) => {
-  console.log(`keydown:${event.code}`);
-  controller[event.code] = true;
+    // if (event.repeat){ return; }
+    controller[event.code] = true;
+    input(false,event);
 });
 
 //入力
@@ -511,7 +525,8 @@ const input = (isTouch={}, e) => {
       gamePlay();
       break;
     case GAME_MODE.play:
-      isTouch ? touch(e.changedTouches[0]) : push(e.key);
+      // isTouch ? touch(e.changedTouches[0]) : push(e.key);
+
       break;
     
       case GAME_MODE.end:
@@ -524,10 +539,10 @@ const input = (isTouch={}, e) => {
 
 window.onload = () => {
   document.documentElement.addEventListener("touchstart", (e) => input(true, e));
-  document.onkeydown = (e) => {
-    if (e.repeat) return;
-    input(false, e);
-  };
+  
+  // document.onkeydown = (e) => {
+  //   input(false, e);
+  // };
 };
 
 //ランク表示
