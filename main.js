@@ -230,12 +230,14 @@ const gamePlay = async () => {
     ++playData.judgeCount[(playData.judge = JUDGE.miss)];
   };
 
-  //バーを描画
+  //ノーツを描画
   const drawTimingBar = () => {
     const current = (player.getCurrentTime() * 1000) | 0;
     for (let i = notes.offset, size = notes.getSize(); i < size; ++i) {
       const y = (current - notes.timing[i]) / playData.speed + rectRange.y - rectRange.height;
-      if (y < 0) break;
+      
+      if (y < 0) { break; }
+
       bar[notes.line[i]].draw(y);
       if (i == notes.index && inputRange.bottom[JUDGE.normal] < y) {
         setInputMiss();
@@ -329,6 +331,9 @@ const gamePlay = async () => {
     clearCanvas(ctx.back);
     clearCanvas(ctx.layer);
     let digit = 10;
+    //ノーツ数から最大の点数を計算する
+    let max_point=notes.getSize()*500;
+
     let ScoreRate=point/max_point*100;
     while (true) {
       if (notes.getSize() < digit) {
@@ -391,9 +396,9 @@ const gamePlay = async () => {
 // good: 2,
 // normal: 3,
 // miss: 4,
-let max_point=0;
-let point=0;
 //入力情報をセット
+
+let point=0;
 const setInput = (line) => {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
@@ -406,19 +411,14 @@ const setInput = (line) => {
         switch(playData.judge){
           // 判定によって点数を加算
           case 0:point+=500;
-          max_point+=500;
             break;
           case 1:point+=300;
-          max_point+=500;
             break;
           case 2:point+=200;
-          max_point+=500;
             break;
           case 3:point+=100;
-          max_point+=500;
             break;
           case 4:point-=100;
-          max_point+=500;
             break;
         }
         break;
