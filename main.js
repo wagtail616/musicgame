@@ -322,7 +322,7 @@ const gamePlay = async () => {
         ++playData.judgeCount[playData.judge];
         if (playData.maxCombo < ++playData.combo) {
           playData.maxCombo = playData.combo;
-      }
+        }
       }
       if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
       drawInputEffect();
