@@ -266,8 +266,6 @@ const gamePlay = async () => {
       anser.play();
       notes.anserIndex++;
     }
-    console.log("anserIndex=> ",notes.timing[1]);
-      console.log("current=> ",current);
   }
   //判定を描画
   const drawJudge = () => {
@@ -436,7 +434,7 @@ const setInput = (line) => {
   playData.judge = JUDGE.empty;
   if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
-      if (inputRange.top[i]-10 < y && y < inputRange.bottom[i]+10) {
+      if (inputRange.top[i]-20 < y && y < inputRange.bottom[i]+20) {
         playData.judge = i;
         switch(playData.judge){
           // 判定によって点数を加算
@@ -564,5 +562,8 @@ const playrank=(ScoreRate)=>{
 
 
 const retry=()=>{
+  //ポイントと最大ポイントの初期化
+  point=0;
+  max_point=0;
   gameStandby();
 }
