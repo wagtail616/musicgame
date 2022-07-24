@@ -562,8 +562,7 @@ const playrank=(ScoreRate)=>{
 
 
 const retry=()=>{
-  //ポイントと最大ポイントの初期化
+  //ポイントの初期化
   point=0;
-  max_point=0;
   gameStandby();
 }
