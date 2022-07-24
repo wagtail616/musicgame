@@ -25,9 +25,9 @@ const VIDEO_SIZE = {
     miss: 4,
     empty:5,//判定なし
     //配列のサイズ??????
-    size: 4,
+    size: 5,
     score: [],
-    text: ["perfect", "excellent", "good", "normal", "miss"],
+    text: ["perfect", "excellent", "good", "normal", "miss", "empty"],
   },
   //バーの色
   BAR_COLOR = [
@@ -237,7 +237,7 @@ const gamePlay = async () => {
     const current = (player.getCurrentTime() * 1000) | 0;
     for (let i = notes.offset, size = notes.getSize(); i < size; ++i) {
       const y = (current - notes.timing[i]) / playData.speed + rectRange.y - rectRange.height;
-      
+      //見えてないノーツは消す
       if (y < 0) { break; }
 
       bar[notes.line[i]].draw(y);
@@ -315,9 +315,7 @@ const gamePlay = async () => {
   //タイミング判定
   const judge = () => {
     if (playData.isInput) {
-      if (playData.judge === JUDGE.empty) {
-        // setInputMiss();
-      } else {
+      if (playData.judge !== JUDGE.empty) {
 
         notes.offset = ++notes.index;
         
