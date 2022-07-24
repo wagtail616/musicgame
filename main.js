@@ -442,11 +442,11 @@ const gamePlay = async () => {
 
 let point=0;
 const setInput = (line) => {
+  if (line === notes.line[notes.index]) {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
   playData.setInput(line, inputRange.over < y);
   playData.judge = JUDGE.empty;
-  if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i]-20 < y && y < inputRange.bottom[i]+20) {
         playData.judge = i;
