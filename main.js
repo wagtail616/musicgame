@@ -348,7 +348,7 @@ const gamePlay = async () => {
       playData.judgeCount[JUDGE.empty]++ ;
     }
     if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
-    // playData.isInput = false;
+    playData.isInput = false;
     drawCount = 30;
     // }
   };
