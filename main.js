@@ -23,6 +23,8 @@ const VIDEO_SIZE = {
     good: 2,
     normal: 3,
     miss: 4,
+    empty:5,//判定なし
+    //配列のサイズ??????
     size: 4,
     score: [],
     text: ["perfect", "excellent", "good", "normal", "miss"],
@@ -313,10 +315,12 @@ const gamePlay = async () => {
   //タイミング判定
   const judge = () => {
     if (playData.isInput) {
-      if (playData.judge === JUDGE.miss) {
-        setInputMiss();
+      if (playData.judge === JUDGE.empty) {
+        // setInputMiss();
       } else {
+
         notes.offset = ++notes.index;
+        
         ++playData.judgeCount[playData.judge];
         if (playData.maxCombo < ++playData.combo) {
           playData.maxCombo = playData.combo;
@@ -386,7 +390,9 @@ const gamePlay = async () => {
   while (GAME_MODE.state === GAME_MODE.play) {
     clearCanvas(ctx.layer);
     judge();
-    drawJudge();
+    if(playData.judge!=JUDGE.empty){
+      drawJudge();
+    }
     drawTimingBar();
     if (notes.isEnd) {
       //sleepでリザルト画面までの時間延ばす
@@ -408,7 +414,7 @@ const setInput = (line) => {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
   playData.setInput(line, inputRange.over < y);
-  playData.judge = JUDGE.miss;
+  playData.judge = JUDGE.empty;
   if (line === notes.line[notes.index]) {
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i]-10 < y && y < inputRange.bottom[i]+10) {
