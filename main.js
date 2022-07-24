@@ -473,7 +473,7 @@ const controller = {};
 const push = (kb) => {
   // for (let [i, key] of keyList.entries()) {
     // if (key === kb) {
-      switch(event.key){
+      switch(kb){
         case'a':setInput(0);
         break;
         case's':setInput(1);
