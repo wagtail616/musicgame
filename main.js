@@ -335,23 +335,22 @@ const gamePlay = async () => {
 
   //タイミング判定
   const judge = () => {
-    if (playData.isInput) {
-      if (playData.judge !== JUDGE.empty) {
+    // if (playData.isInput) {
+    if (playData.judge !== JUDGE.empty) {
 
-        notes.offset = ++notes.index;
+      notes.offset = ++notes.index;
         
-        ++playData.judgeCount[playData.judge];
-        if (playData.maxCombo < ++playData.combo) {
-          playData.maxCombo = playData.combo;
-        }
-      }else{
-        playData.judgeCount[JUDGE.empty]++ ;
+      ++playData.judgeCount[playData.judge];
+      if (playData.maxCombo < ++playData.combo) {
+        playData.maxCombo = playData.combo;
       }
-      if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
-      drawInputEffect();
-      playData.isInput = false;
-      drawCount = 30;
+    }else{
+      playData.judgeCount[JUDGE.empty]++ ;
     }
+    if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
+    playData.isInput = false;
+    drawCount = 30;
+    // }
   };
 
   //プレイデータを描画
@@ -410,9 +409,17 @@ const gamePlay = async () => {
   //ゲームループ
   while (GAME_MODE.state === GAME_MODE.play) {
     const current = (player.getCurrentTime() * 1000) | 0;
+    for(let i=0;i<keyNames.length;i++){
+      if(controller[keyNames[i]]){
+        push(keyNames[i]);
+      }
+    }
     clearCanvas(ctx.layer);
 
-    judge();
+    if (playData.isInput) {
+      judge();
+      drawInputEffect();
+    }
     if(playData.judge!=JUDGE.empty){
       drawJudge();
     }
@@ -424,11 +431,6 @@ const gamePlay = async () => {
       gameEnd();
     }
 
-    for(let i=0;i<keyNames.length;i++){
-      if(controller[keyNames[i]]){
-        push(keyNames[i]);
-      }
-    }
     controller={};
     await sleep(16);
   }
