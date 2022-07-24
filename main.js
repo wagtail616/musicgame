@@ -348,7 +348,7 @@ const gamePlay = async () => {
       playData.judgeCount[JUDGE.empty]++ ;
     }
     if (playData.over && notes.index === playData.index) notes.offset = ++notes.index;
-    playData.isInput = false;
+    // playData.isInput = false;
     drawCount = 30;
     // }
   };
@@ -444,10 +444,10 @@ const gamePlay = async () => {
 
 let point=0;
 const setInput = (line) => {
+  playData.isInput
   if (line === notes.line[notes.index]) {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
-  playData.setInput(line, inputRange.over < y);
   playData.judge = JUDGE.empty;
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i]-20 < y && y < inputRange.bottom[i]+20) {
