@@ -252,6 +252,7 @@ const gamePlay = async () => {
   const drawJudge = () => {
     if (drawCount <= 0) return;
     ctx.layer.font = "32pt sans-serif";
+    //判定によって文字色変更
     switch(playData.judge){
       case 0:ctx.layer.fillStyle = "yellow";
       break;
@@ -264,11 +265,13 @@ const gamePlay = async () => {
       case 4:ctx.layer.fillStyle = "blue";
       break;
     }
+    //判定を画面に描画
     ctx.layer.fillText(
       JUDGE.text[playData.judge],
       (cvSize.width - ctx.layer.measureText(JUDGE.text[playData.judge]).width) >> 1,
       cvSize.height / 2 + drawCount
     );
+    //黒く縁取り
     ctx.layer.fillStyle = "black";
     ctx.layer.strokeText(
       JUDGE.text[playData.judge],
@@ -278,14 +281,14 @@ const gamePlay = async () => {
 
     if (1 < playData.combo) {
       let text = playData.combo + " Combo";
-      
+      //白文字
       ctx.layer.fillStyle = "white";
       ctx.layer.fillText(
         text,
         (cvSize.width - ctx.layer.measureText(text).width) >> 1,
         cvSize.height / 1.75 + drawCount
       );
-      
+      //黒く縁取り
       ctx.layer.fillStyle = "black";
       ctx.layer.strokeText(
         text,
@@ -358,7 +361,9 @@ const gamePlay = async () => {
       const x = i === JUDGE.excellent ? right : cvSize.width - right - ctx.layer.measureText(text).width;
       ctx.layer.fillText(text, x-200, cvSize.height / 2 + textHeight * i+110);
     }
+    //白文字
     ctx.layer.fillText("ScoreRate:"+ScoreRate.toFixed(2).toString()+"%", cvSize.width/2-100, cvSize.height / 2 + textHeight);
+    //黒く縁取り
     ctx.layer.fillStyle = "black";
     ctx.layer.strokeText("ScoreRate:"+ScoreRate.toFixed(2).toString()+"%", cvSize.width/2-100, cvSize.height / 2 + textHeight);
 
@@ -523,8 +528,10 @@ const playrank=(ScoreRate)=>{
   }else{
     Rank="D";
   }
+  // 白文字
   ctx.layer.fillStyle = "white";
   ctx.layer.fillText(Rank, cvSize.width/2, cvSize.height / 2);
+  // 黒く縁取り
   ctx.layer.fillStyle = "black";
   ctx.layer.strokeText(Rank, cvSize.width/2, cvSize.height / 2 );
 
