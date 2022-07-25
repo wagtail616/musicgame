@@ -1,7 +1,7 @@
 // アンサー音を読み込む
 /** アンサー音*/
 const anser = new Audio('./tap.wav');
-anser.volume=0.4;
+anser.volume=0.3;
 let controller={};
 /**押されたキーの名称 */
 let keyNames=["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL","Semicolon"];
