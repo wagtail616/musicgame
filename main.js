@@ -409,11 +409,6 @@ const gamePlay = async () => {
   //ゲームループ
   while (GAME_MODE.state === GAME_MODE.play) {
     const current = (player.getCurrentTime() * 1000) | 0;
-    for(let i=0;i<keyNames.length;i++){
-      if(controller[keyNames[i]]){
-        push(keyNames[i]);
-      }
-    }
     clearCanvas(ctx.layer);
 
     if (playData.isInput) {
@@ -431,6 +426,11 @@ const gamePlay = async () => {
       gameEnd();
     }
 
+    for(let i=0;i<keyNames.length;i++){
+      if(controller[keyNames[i]]){
+        push(keyNames[i]);
+      }
+    }
     controller={};
     await sleep(16);
   }
@@ -444,10 +444,10 @@ const gamePlay = async () => {
 
 let point=0;
 const setInput = (line) => {
-  playData.isInput
   if (line === notes.line[notes.index]) {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
+  playData.setInput(line, inputRange.over < y);
   playData.judge = JUDGE.empty;
     for (let i = 0; i < JUDGE.size; ++i) {
       if (inputRange.top[i]-20 < y && y < inputRange.bottom[i]+20) {
