@@ -6,6 +6,8 @@ let controller={};
 /**押されたキーの名称 */
 let keyNames=["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL","Semicolon"];
 
+let inputNumber;
+
 const VIDEO_SIZE = {
     width: 640,
     height: 360,
@@ -174,7 +176,7 @@ const gameStandby = async () => {
 
 
   //テキストを描画
-  const text = "TOUCH START";
+  const text = "ANYKEY START";
   const drawText = () => {
     ctx.layer.font = "28pt sans-serif";
     ctx.layer.fillStyle = "white";
@@ -324,13 +326,14 @@ const gamePlay = async () => {
 
   //入力エフェクトを描画
   const drawInputEffect = () => {
-    ctx.layer.fillStyle = effectColor[playData.inputLine];
+    ctx.layer.fillStyle = effectColor[inputNumber];
     ctx.layer.fillRect(
-      rectRange.width * playData.inputLine + rectRange.leftSpace,
+      rectRange.width * inputNumber + rectRange.leftSpace,
       0,
       rectRange.width - rectRange.rightSpace,
-      cvSize.height
+      cvSize.height//グローバル化したい
     );
+    inputNumber=-2;
   };
 
   //タイミング判定
@@ -413,11 +416,13 @@ const gamePlay = async () => {
 
     if (playData.isInput) {
       judge();
-      drawInputEffect();
+      console.log(playData.inputLine);
     }
     if(playData.judge!=JUDGE.empty){
       drawJudge();
     }
+    drawInputEffect();
+    
     drawTimingBar(current);
     soundControll(current);
     if (notes.isEnd) {
@@ -444,6 +449,7 @@ const gamePlay = async () => {
 
 let point=0;
 const setInput = (line) => {
+  
   if (line === notes.line[notes.index]) {
   const y =
     (((player.getCurrentTime() * 1000) | 0) - notes.timing[notes.index]) / playData.speed + rectRange.y;
@@ -488,25 +494,33 @@ const touch = (e) => {
 const push = (kb) => {
   // for (let [i, key] of keyList.entries()) {
     // if (key === kb) {
+      /**入力したラインの番号 */
       switch(kb){
         case'KeyA':setInput(0);
-        break;
+          inputNumber=0;
+          break;
         case'KeyS':setInput(1);
-        break;
+          inputNumber=1;
+          break;
         case'KeyD':setInput(2);
-        break;
+          inputNumber=2;
+          break;
         case'KeyF':setInput(3);
-        break;
+          inputNumber=3;
+          break;
         case'KeyJ':setInput(4);
-        break;
+          inputNumber=4;
+          break;
         case'KeyK':setInput(5);
-        break;
+          inputNumber=5;
+          break;
         case'KeyL':setInput(6);
-        break;
+          inputNumber=6;
+          break;
         case'Semicolon':setInput(7);
-        break;
+          inputNumber=7;
+          break;
       }
-      
       // break;
     // }
   // }
