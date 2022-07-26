@@ -1,7 +1,7 @@
 // アンサー音を読み込む
 /** アンサー音*/
 const anser = new Audio('./tap.wav');
-anser.volume=0.3;
+anser.volume=0.6;
 let controller={};
 /**押されたキーの名称 */
 let keyNames=["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL","Semicolon"];
@@ -38,7 +38,7 @@ const VIDEO_SIZE = {
     //配列のサイズ??????
     size: 4,
     score: [],
-    text: ["perfect", "excellent", "good", "normal", "miss", "empty"],
+    text: ["perfect", "excellent", "good", "normal", "miss"],
   },
   //バーの色
   BAR_COLOR = [
@@ -206,7 +206,7 @@ const initGame = () => {
     maxCombo: 0, //MAXコンボ
     judge: null, //タイミング判定
     judgeCount: JUDGE.text.map(() => 0), //各タイミングの判定回数
-    speed: 1.5, //落下速度
+    speed: 1, //落下速度
     isInput: false, //trueなら入力あり
     inputLine: null, //入力ライン
     over: false, //入力ラインを越えたか
@@ -456,7 +456,7 @@ const setInput = (line) => {
   playData.setInput(line, inputRange.over < y);
   playData.judge = JUDGE.empty;
     for (let i = 0; i < JUDGE.size; ++i) {
-      if (inputRange.top[i]-20 < y && y < inputRange.bottom[i]+20) {
+      if (inputRange.top[i]-40< y && y < inputRange.bottom[i]+40) {
         playData.judge = i;
         switch(playData.judge){
           // 判定によって点数を加算
