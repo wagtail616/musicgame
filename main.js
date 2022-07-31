@@ -38,7 +38,7 @@ const VIDEO_SIZE = {
     //配列のサイズ??????
     size: 4,
     score: [],
-    text: ["perfect", "excellent", "good", "normal", "miss"],
+    text: ["perfect", "excellent", "good", "normal", "miss","empty"],
   },
   //バーの色
   BAR_COLOR = [
@@ -389,8 +389,11 @@ const gamePlay = async () => {
     for (let [i, text] of list.entries()) {
       text += " : " + padZero(data[i], digit);
       const x = i === JUDGE.excellent ? right : cvSize.width - right - ctx.layer.measureText(text).width;
+      if(i!=5){
       ctx.layer.fillText(text, x-200, cvSize.height / 2 + textHeight * i+110);
+      }
     }
+
     //白文字
     ctx.layer.fillText("ScoreRate:"+ScoreRate.toFixed(2).toString()+"%", cvSize.width/2-100, cvSize.height / 2 + textHeight);
     //黒く縁取り
