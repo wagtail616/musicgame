@@ -85,6 +85,9 @@ class Bar {
   draw(y) {
     ctx.layer.fillStyle = this.color;
     ctx.layer.fillRect(this.x, y, this.#width, this.#height);
+    ctx.layer.strokeStyle = "black";
+    ctx.layer.strokeRect(this.x, y, this.#width, this.#height);
+
   }
 }
 
@@ -248,7 +251,7 @@ const gamePlay = async () => {
   const drawTimingBar = (current) => {
     // const current = (player.getCurrentTime() * 1000) | 0;
     for (let i = notes.offset, size = notes.getSize(); i < size; ++i) {
-      const y = (current - notes.timing[i]) / playData.speed + rectRange.y - rectRange.height;
+      const y = (current - notes.timing[i]-100) / playData.speed + rectRange.y - rectRange.height;
       //見えてないノーツは消す
       if (y < 0) { break; }
 
@@ -456,7 +459,7 @@ const setInput = (line) => {
   playData.setInput(line, inputRange.over < y);
   playData.judge = JUDGE.empty;
     for (let i = 0; i < JUDGE.size; ++i) {
-      if (inputRange.top[i]-40< y && y < inputRange.bottom[i]+40) {
+      if (inputRange.top[i]< y+100 && y < inputRange.bottom[i]+100) {
         playData.judge = i;
         switch(playData.judge){
           // 判定によって点数を加算
