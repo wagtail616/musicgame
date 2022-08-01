@@ -402,6 +402,7 @@ const gamePlay = async () => {
 
   };
 
+
   //プレイ終了
   const gameEnd = () => {
     GAME_MODE.state = GAME_MODE.playData;
@@ -419,10 +420,9 @@ const gamePlay = async () => {
   while (GAME_MODE.state === GAME_MODE.play) {
     const current = (player.getCurrentTime() * 1000) | 0;
     clearCanvas(ctx.layer);
-
+    
     if (playData.isInput) {
       judge();
-      console.log(playData.inputLine);
     }
     if(playData.judge!=JUDGE.empty){
       drawJudge();
@@ -536,6 +536,10 @@ const push = (kb) => {
 document.addEventListener('keydown', (event) => {
     // if (event.repeat){ return; }
     controller[event.code] = true;
+    if (event.key === "Tab") {
+      // デフォルト動作停止
+      event.preventDefault();
+    }
     input(false,event);
 });
 
